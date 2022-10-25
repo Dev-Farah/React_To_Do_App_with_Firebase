@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { signUpUser } from '../config/firebasemethods';
 import { Container, Box, Typography } from '@mui/material'
 import { Input, Btn } from '../components/InputandButton';
@@ -45,7 +45,7 @@ export default function SignUp() {
                 )
             })
             .catch((error) => {
-                console.log(error);
+                alert(error);
             });
     }
 
@@ -115,9 +115,9 @@ export default function SignUp() {
                         />
                     </Box>
 
-                    <Box style={{ display: 'flex', justifyContent: 'right' }}>
-                        <Btn
-                            btnVal="Sign Up" onClick={signUp} />
+                    <Box style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <Typography sx={{ color: "#5e5e5e" }} variant='subtitle2'>Already have an account?  <em><Link className='loginSignUpLink' to="/Login">Login</Link></em></Typography>
+                        <Btn btnVal="Sign Up" onClick={signUp} />
                     </Box>
                 </Box>
             </Container>

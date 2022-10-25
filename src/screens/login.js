@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../config/firebasemethods";
 import { Container, Box, Typography } from '@mui/material'
 import { Input, Btn } from '../components/InputandButton';
@@ -44,7 +44,7 @@ export default function Login() {
                 )
             })
             .catch((err) => {
-                console.log(err);
+                alert(err);
             });
     };
 
@@ -91,9 +91,9 @@ export default function Login() {
                         />
                     </Box>
 
-                    <Box style={{ display: 'flex', justifyContent: 'right' }}>
-                        <Btn
-                            btnVal="Login" onClick={login} />
+                    <Box style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <Typography sx={{color: "#5e5e5e"}} variant='subtitle2'>Don't have an account?  <em><Link className='loginSignUpLink' to="/SignUp">Sign up</Link></em></Typography>
+                        <Btn btnVal="Login" onClick={login} />
                     </Box>
                 </Box>
             </Container>

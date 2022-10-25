@@ -22,6 +22,15 @@
   padding: 20px;
 }
 
+.loginSignUpLink {
+  text-decoration: none;
+    color: #5e5e5e;
+}
+
+.loginSignUpLink:hover {
+  text-decoration: underline;
+}
+
 
 /* ---------------------------------- Home ---------------------------------- */
 .main {
@@ -48,7 +57,6 @@
 
 .input {
   margin: auto !important;
-  padding: 0px !important;
   font-size: 16px !important;
   border: none !important;
   width: 100% !important;
@@ -56,6 +64,10 @@
   border-radius: 10px !important;
   background-color: #fff;
   box-shadow: inset rgba(97, 97, 97, 0.12) 0px 1px 3px, inset rgba(76, 76, 76, 0.24) 0px 1px 2px !important;
+}
+
+.inputBoxToDo .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
+  padding: 9px!important
 }
 
 .btn {

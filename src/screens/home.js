@@ -1,29 +1,46 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Grid, Box, Typography } from '@mui/material';
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getDatabase, ref, set, onValue, update, remove } from "firebase/database";
+import app from "../config/firebaseconfig";
+import { userSignOut } from "../config/firebasemethods";
 import { Input, Btn } from '../components/InputandButton';
 import EditIcon from '@mui/icons-material/Edit';
-import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 
 
 export default function Home() {
+
+    const auth = getAuth(app);
+    const database = getDatabase(app);
+    const navigate = useNavigate();
     const location = useLocation();
     let userDetails = location.state;
-    
+
+    let key = Date.now();
+    let [toDo, setToDo] = useState('');
+    let [list, setList] = useState([]);
+    let [count, setCount] = useState(0);
+    let [isEditing, setIsEditing] = useState(false);
+    let [tempUid, setTempUid] = useState('');
+
     let handleSubmit = (e) => {
         e.preventDefault();
     }
-    let [toDo, setToDo] = useState('');
-    let [count, setCount] = useState(0);
-    let [list, setList] = useState([]);
 
     const add = (e, i) => {
         if (toDo.length >= 5 && toDo.length <= 40) {
-            setList([...list, toDo])
-            console.log(list);
+
+            set(ref(database, `/todos/${auth.currentUser.uid}/${key}`), {
+                todo: toDo,
+                key: key,
+                time: `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`,
+                username: location.state.userName,
+                email: auth.currentUser.email,
+            });
             setToDo('');
             (setCount(++count))
 
@@ -33,36 +50,71 @@ export default function Home() {
     }
 
     const clearAll = () => {
+        remove(ref(database, `todos/${auth.currentUser.uid}/`));
         setList([]);
         (setCount(0))
-
     }
+
     const edit = (e, i) => {
-        let editedToDo;
-        do {
-            editedToDo = prompt("Edit to-do", e);
-        } while (!editedToDo);
-        list.splice(i, 1, editedToDo);
-        setList([...list])
+        setIsEditing(true);
+        setToDo(e.todo);
+        setTempUid(e.key)
     }
 
-    const del = (i) => {
-        list.splice(i, 1);
-        setList([...list]);
+    let saveEdit = (e) => {
+        if (toDo.length >= 5 && toDo.length <= 40) {
+
+            update(ref(database, `todos/${auth.currentUser.uid}/${tempUid}`), {
+                todo: toDo,
+                key: tempUid,
+                time: `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`,
+                username: location.state.userName,
+                email: auth.currentUser.email,
+            });
+            setToDo('');
+            setIsEditing(false);
+        } else {
+            alert("Invalid Entry, Please Enter a valid to-do");
+        }
+    }
+
+    const del = (e) => {
+        remove(ref(database, `todos/${auth.currentUser.uid}/${e.key}`));
         (setCount(--count))
     }
+
+    useEffect(() => {
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                onValue(ref(database, `todos/${auth.currentUser.uid}`), (snapshot) => {
+                    setList([]);
+                    const data = snapshot.val();
+                    if (data !== null) {
+                        Object.values(data).map((e) => {
+                            setList((OldArray) => [e, ...OldArray]);
+                        })
+                        count = Object.values(data).length
+                        setCount(count)
+                    }
+                })
+            } else if (!user) {
+                navigate('/Login')
+            }
+        })
+    }, [])
 
     return (
         <>
             <Grid container p={3} className="main">
                 <Grid item mx="auto" lg={6} md={6} sm={12} flexDirection={"column"}>
                     <Box className="partition1">
+
                         <Typography mb={2} variant="h4" color="#fff" fontWeight={"bold"}>
                             To-Do List
                         </Typography>
 
                         <form onSubmit={handleSubmit} style={{ display: "flex", alignItems: "center", flexWrap: 'nowrap' }}>
-                            <Box sx={{ width: "100%"}}>
+                            <Box className="inputBoxToDo" sx={{ width: "100%" }}>
                                 <Input
                                     value={toDo}
                                     type="text"
@@ -75,10 +127,12 @@ export default function Home() {
                                 />
                             </Box>
 
-                            <Box sx={{ width: "145px", flexWrap: 'wrap' }}>
+                            {isEditing ?
+                                <Btn btnVal="Save" onClick={() => saveEdit()} />
+                                :
                                 <Btn btnVal="Add" onClick={() => add()} />
-                                <Btn otherClasses='clearAllBtn' btnVal={<DeleteIcon />} onClick={() => clearAll()} />
-                            </Box>
+                            }
+                            <Btn otherClasses='clearAllBtn' btnVal={<DeleteIcon />} onClick={() => clearAll()} />
                         </form>
 
                     </Box>
@@ -91,6 +145,7 @@ export default function Home() {
                             You have: {count <= 0 ? "No" : count} {count == 1 ? "task" : "tasks"}
                         </Typography>
                     </Box>
+
                     <Box>
                         <ul>
                             {list.map((e, i) => {
@@ -99,12 +154,11 @@ export default function Home() {
                                         <Typography variant="h5"
                                             key={i}
                                             m={0}>
-                                            {e}
+                                            {e.todo}
                                         </Typography>
                                         <Box>
                                             <Btn otherClasses='editBtn' btnVal={<EditIcon />} onClick={() => edit(e, i)} />
-                                            {/* <Btn otherClasses='updateBtn' btnVal={<CheckIcon />} onClick={() => save(e, i)} /> */}
-                                            <Btn otherClasses='updateBtn' btnVal={<CloseIcon />} onClick={() => del(i)} />
+                                            <Btn otherClasses='updateBtn' btnVal={<CloseIcon />} onClick={() => del(e)} />
                                         </Box>
                                     </li>
                                 )
@@ -113,6 +167,10 @@ export default function Home() {
                     </Box>
                 </Grid>
             </Grid>
+
+            <Box style={{ zIndex: 1, position: "fixed", right: "20px", bottom: "20px" }}>
+                <Btn btnVal="Sign Out" onClick={() => userSignOut()} />
+            </Box>
         </>
     )
 }

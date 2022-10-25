@@ -2,7 +2,7 @@ import app from "./firebaseconfig";
 import {
   getAuth,
   createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
+  signInWithEmailAndPassword, signOut
 } from "firebase/auth";
 import { getDatabase, ref, set, onValue, child, push, update } from "firebase/database";
 
@@ -24,9 +24,8 @@ let signUpUser = (obj) => {
           // === this "then" will give the status of database function
           .then(() => {
             // this "resolve" is our custom message which will show in signup page "then"
-
-            // this "resolve" is our custom message which will show in signup page "then"
-            resolve("User Created Successfully and sent to database");
+            // resolve("User Created Successfully and sent to database");
+            resolve(obj);
           })
           .catch((error) => {
             reject(error);
@@ -66,6 +65,11 @@ let loginUser = (obj) => {
   });
 };
 
+
+let userSignOut = () => {
+  signOut(auth).catch((error) => { alert(error.message)})
+}
+
 let toDos = (obj) => {
   
   let { toDo, time, uid, username } = obj;
@@ -78,4 +82,4 @@ let toDos = (obj) => {
 
   }}
 
-export { signUpUser, loginUser, toDos };
+export { signUpUser, loginUser, userSignOut, toDos };
