@@ -11,7 +11,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 
 
-export default function Login() {
+function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [values, setValues] = useState({
@@ -37,7 +37,7 @@ export default function Login() {
             password,
         })
             .then((success) => {
-                console.log(success);
+                // console.log(success);
                 navigate(`/`, {
                     state: success
                 }
@@ -100,3 +100,6 @@ export default function Login() {
         </>
     )
 }
+
+
+export default Login;

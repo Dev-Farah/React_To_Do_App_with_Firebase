@@ -20,6 +20,7 @@
   border-radius: 20px;
   border: 1px solid lightgray;
   padding: 20px;
+  margin-top: 24px;
 }
 
 .loginSignUpLink {
@@ -135,4 +136,24 @@ li {
 
 .todo:nth-child(even) {
   background-color: #cecece;
+}
+
+
+
+
+
+
+
+
+
+
+@media only screen and (max-width: 782px) {
+  .errorImg{
+    width: 50%
+  }
+}
+@media only screen and (max-width: 552px) {
+  .errorImg{
+    width: 80%
+  }
 }

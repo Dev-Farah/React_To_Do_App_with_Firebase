@@ -48,7 +48,7 @@ let loginUser = (obj) => {
         const reference = ref(database, `users/${user.uid}`);
         onValue(reference, (e) => {
           let status = e.exists();
-          console.log(status);
+          // console.log(status);
           if (status) {
             resolve(e.val());
           } else {
@@ -70,16 +70,19 @@ let userSignOut = () => {
   signOut(auth).catch((error) => { alert(error.message)})
 }
 
-let toDos = (obj) => {
+// let toDos = (obj) => {
   
-  let { toDo, time, uid, username } = obj;
-  function writeNewPost(uid, username, toDo, time) {
-    const db = getDatabase();
+//   let { toDo, time, uid, username } = obj;
+//   function writeNewPost(uid, username, toDo, time) {
+//     const db = getDatabase();
   
-    const user = obj;
-    const refrence = ref(database, `users/${user.uid}`);
-        set(refrence, obj)
+//     const user = obj;
+//     const refrence = ref(database, `users/${user.uid}`);
+//     set(refrence, obj)
 
-  }}
+//   }
+// }
 
-export { signUpUser, loginUser, userSignOut, toDos };
+export { signUpUser, loginUser, userSignOut
+  // , toDos
+ };

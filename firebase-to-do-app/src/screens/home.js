@@ -12,7 +12,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 
 
-export default function Home() {
+function Home() {
 
     const auth = getAuth(app);
     const database = getDatabase(app);
@@ -122,7 +122,7 @@ export default function Home() {
                                     onChange={(e) => {
                                         toDo = e.target.value;
                                         setToDo(toDo);
-                                        console.log(toDo);
+                                        // console.log(toDo);
                                     }}
                                 />
                             </Box>
@@ -174,3 +174,6 @@ export default function Home() {
         </>
     )
 }
+
+
+export default Home;

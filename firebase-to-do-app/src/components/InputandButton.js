@@ -10,7 +10,7 @@ function Input(props) {
     return (
 
         <FormControl sx={{ padding: "0!important", margin: "0!important", width: "100%!important" }} variant="outlined">
-            <InputLabel sx={{ padding: "0!important", margin: "0!important" }} htmlFor={id}>{label}</InputLabel>
+            <InputLabel sx={{ padding: "0!important", margin: "0!important", backgroundColor: "#fff" }} htmlFor={id}>{label}</InputLabel>
             <OutlinedInput
             className="input"
                 id={id}

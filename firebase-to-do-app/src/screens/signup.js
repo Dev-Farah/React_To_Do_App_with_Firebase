@@ -8,7 +8,8 @@ import InputAdornment from '@mui/material/InputAdornment';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-export default function SignUp() {
+
+function SignUp() {
     const [userName, setUserName] = useState("");
     const [contact, setContact] = useState("");
     const [email, setEmail] = useState("");
@@ -125,3 +126,6 @@ export default function SignUp() {
         </>
     )
 }
+
+
+export default SignUp;
