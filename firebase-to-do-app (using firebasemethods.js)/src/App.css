@@ -1,0 +1,159 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+}
+
+
+/* ---------------------------------- Signup Login ---------------------------------- */
+
+.signupLoginHeading {
+  background-color: #5e5e5e;
+  border-radius: 20px 20px 0 0;
+  padding: 20px;
+  color: #fff;
+}
+
+.outerBox {
+  width: 100% !important;
+  border-radius: 20px;
+  border: 1px solid lightgray;
+  padding: 20px;
+  margin-top: 24px;
+}
+
+.loginSignUpLink {
+  text-decoration: none;
+    color: #5e5e5e;
+}
+
+.loginSignUpLink:hover {
+  text-decoration: underline;
+}
+
+
+/* ---------------------------------- Todos.js ---------------------------------- */
+.main {
+  width: 100% !important;
+
+}
+
+.partition1 {
+  background-color: #5e5e5e;
+  padding: 35px 15px 30px 15px;
+  border-radius: 20px 20px 0 0;
+}
+
+.partition2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #808080;
+  padding: 20px 15px;
+  border-radius: 0 0 20px 20px;
+
+
+}
+
+.input {
+  margin: auto !important;
+  font-size: 16px !important;
+  border: none !important;
+  width: 100% !important;
+  color: #5e5e5e !important;
+  border-radius: 10px !important;
+  background-color: #fff;
+  box-shadow: inset rgba(97, 97, 97, 0.12) 0px 1px 3px, inset rgba(76, 76, 76, 0.24) 0px 1px 2px !important;
+}
+
+.inputBoxToDo .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
+  padding: 9px!important
+}
+
+.btn {
+  background-color: #00B69A !important;
+  padding: 8px !important;
+  margin-left: 8px !important;
+  border-radius: 8px !important;
+  min-width: auto !important;
+}
+
+.btn:hover {
+  background-color: #00937B !important;
+}
+
+.clearAllBtn {
+  background-color: #f1f1f1 !important;
+  color: #5e5e5e !important
+}
+
+.clearAllBtn:hover {
+  background-color: #f1f1f1 !important;
+
+}
+
+ul {
+  margin: 15px auto;
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.editBtn,
+.updateBtn,
+.delBtn {
+  background-color: transparent !important;
+  color: #5e5e5e !important;
+  box-shadow: none !important;
+  border-radius: 50% !important;
+}
+
+.editBtn:hover,
+.updateBtn:hover,
+.delBtn:hover {
+  background-color: transparent !important;
+
+}
+
+.todo {
+  color: #5e5e5e;
+  background-color: #ffffff;
+  max-width: 100% !important;
+  margin-bottom: 15px;
+  padding: 15px;
+  border-radius: 15px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.todo h4 {
+  margin: 0;
+  margin-bottom: 5px;
+}
+
+.todo:nth-child(even) {
+  background-color: #cecece;
+}
+
+
+
+
+
+
+
+
+
+
+@media only screen and (max-width: 782px) {
+  .errorImg{
+    width: 50%
+  }
+}
+@media only screen and (max-width: 552px) {
+  .errorImg{
+    width: 80%
+  }
+}
